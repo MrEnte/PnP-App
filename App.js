@@ -1,11 +1,15 @@
 import React from 'react';
-import { Box, NativeBaseProvider } from 'native-base';
-
+import { Box, Center, NativeBaseProvider, Text } from 'native-base';
+import HomeScreen from './views/home/homeScreen';
 
 const App = () => {
     return (
         <NativeBaseProvider>
-            <Box>Hello Leonie!</Box>
+            <Center
+                flex={1}
+            >
+                <HomeScreen/>
+            </Center>
         </NativeBaseProvider>
     );
 };
