@@ -7,27 +7,31 @@ const CharacterSchema = {
     properties: {
         _id: 'int',
         name: 'string',
+        health: 'int',
     },
     primaryKey: '_id',
 };
 
 let characterRealm = new Realm({
-    schema: [CharacterSchema],
+    schema: [ CharacterSchema ],
     path: 'CharacterDatabase.realm',
+    schemaVersion: 2,
 });
 
 export const getAllCharacters = () => characterRealm.objects(CHARACTER_SCHEMA);
 
-export const createCharacter = ({ characterName }) => characterRealm.write(() => {
-    let id = characterRealm.objects(CHARACTER_SCHEMA).max('_id') + 1 || 1;
+export const createCharacter = ({ characterName, characterHealth }) => characterRealm.write(() => {
+    const id = characterRealm.objects(CHARACTER_SCHEMA).max('_id') + 1 || 1;
     characterRealm.create(CHARACTER_SCHEMA, {
         name: characterName,
+        health: characterHealth,
         _id: id,
     });
 });
 
-export const deleteAllCharacter = () => characterRealm.write(() => {
-    characterRealm.delete(getAllCharacters())
+export const deleteAllCharacter = (setCharacters) => characterRealm.write(() => {
+    characterRealm.delete(getAllCharacters());
+    setCharacters([]);
 });
 
 export default characterRealm;

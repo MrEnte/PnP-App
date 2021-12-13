@@ -1,25 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Center, Text } from 'native-base';
+import React, { useState } from 'react';
+import { Box, Center, FlatList, HStack, Text, VStack } from 'native-base';
 import AppButton from '../../components/AppButton';
 import { deleteAllCharacter, getAllCharacters } from '../../../database/character';
 import { useFocusEffect } from '@react-navigation/native';
+import { Spacer } from 'native-base/src/components/primitives/Flex/index';
 
-const CharacterItem = ({ id, name }) => {
-    return (
-        <Box>
-            <Text>
-                {`ID: ${id}`}
-            </Text>
-            <Text>
-                {`Name: ${name}`}
-            </Text>
-        </Box>
-    );
-};
+const CharacterList = ({ characters }) => (
+    <FlatList
+        data={ characters }
+        renderItem={ ({ item }) => (
+            <Box
+                borderBottomWidth='1'
+                _dark={ {
+                    borderColor: 'gray.600',
+                } }
+                borderColor='coolGray.200'
+                pl='4'
+                pr='5'
+                py='2'
+            >
+                <HStack space={ 3 } justifyContent='space-between'>
+                    <VStack>
+                        <Text
+                            _dark={ {
+                                color: 'warmGray.50',
+                            } }
+                            color='coolGray.800'
+                            bold
+                        >
+                            { item.name }
+                        </Text>
+                        <Text
+                            color='coolGray.600'
+                            _dark={ {
+                                color: 'warmGray.200',
+                            } }
+                        >
+                            { item.health }
+                        </Text>
+                    </VStack>
+                    <Spacer />
+                    <Text
+                        fontSize='xs'
+                        _dark={ {
+                            color: 'warmGray.50',
+                        } }
+                        color='coolGray.800'
+                        alignSelf='flex-start'
+                    >
+                        { item._id }
+                    </Text>
+                </HStack>
+            </Box>
+        ) }
+        keyExtractor={ (item) => item._id }
+    />
+);
 
 const HomeScreen = ({ navigation }) => {
-    const [count, setCount] = useState(0);
-    const [characters, setCharacters] = useState([]);
+    const [ characters, setCharacters ] = useState([]);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -29,27 +68,22 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <>
-            <Center flex={1}>
-                <Text>
-                    {`Counter: ${count}`}
-                </Text>
-            </Center>
-            <Center flex={4}>
+            <Center flex={ 4 }>
                 {
                     characters.length
-                        ? characters.map((character) => <CharacterItem id={character._id} name={character.name}/>)
+                        ? <CharacterList characters={ characters } />
                         : <Text>No Characters!</Text>
                 }
             </Center>
-            <Center flex={1}>
+            <Center flex={ 1 }>
                 <Box>
                     <AppButton
                         label='Add Character'
-                        onPress={() => navigation.navigate('Create Character')}
+                        onPress={ () => navigation.navigate('Create Character') }
                     />
                     <AppButton
                         label='Delete Characters'
-                        onPress={() => deleteAllCharacter()}
+                        onPress={ () => deleteAllCharacter(setCharacters) }
                     />
                 </Box>
             </Center>

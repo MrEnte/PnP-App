@@ -8,9 +8,9 @@ const AppButton = ({ label, onPress }) => (
         size='sm'
         borderRadius='md'
         bgColor='red.500'
-        onPress={onPress}
+        onPress={ onPress }
     >
-        {label}
+        { label }
     </Button>
 );
 
