@@ -5,8 +5,8 @@ import { createCharacter } from '../../../database/character';
 import AppInputField from '../../components/AppInputField';
 
 const CreateCharacterScreen = ({ navigation }) => {
-    const [ characterName, setCharacterName ] = useState('');
-    const [ characterHealth, setCharacterHealth ] = useState('');
+    const [characterName, setCharacterName] = useState('');
+    const [characterHealth, setCharacterHealth] = useState('');
 
     const handlePress = () => {
         createCharacter({ characterName, characterHealth });
@@ -15,28 +15,28 @@ const CreateCharacterScreen = ({ navigation }) => {
 
     return (
         <>
-            <Center flex={ 1 }>
+            <Center flex={1}>
                 <Text>
                     Create Character!
                 </Text>
             </Center>
-            <Center flex={ 5 }>
+            <Center flex={5}>
                 <AppInputField
-                    value={ characterName }
-                    onChangeText={ (value) => setCharacterName(value) }
+                    value={characterName}
+                    onChangeText={(value) => setCharacterName(value)}
                     placeholder='Name'
                 />
                 <AppInputField
-                    value={ characterHealth }
-                    onChangeText={ (value) => setCharacterHealth(parseInt(value)) }
+                    value={characterHealth}
+                    onChangeText={(value) => setCharacterHealth(parseInt(value))}
                     placeholder='Health'
                     keyboardType='number-pad'
                 />
             </Center>
-            <Center flex={ 1 }>
+            <Center flex={1}>
                 <AppButton
                     label='Create'
-                    onPress={ () => handlePress() }
+                    onPress={() => handlePress()}
                 />
             </Center>
         </>
