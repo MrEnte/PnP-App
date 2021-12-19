@@ -10,6 +10,11 @@ import CharacterDetailsScreen from './src/views/characterDetails/characterDetail
 
 const Stack = createNativeStackNavigator();
 const store = configureStore()
+const config = {
+    dependencies: {
+        'linear-gradient': require('react-native-linear-gradient').default,
+    },
+};
 
 const Navigation = () => {
     const selectedCharacter = useSelector((state) => state.CharacterReducer.selectedCharacter);
@@ -27,7 +32,7 @@ const App = () => {
     return (
         <NavigationContainer>
             <Provider store={store}>
-                <NativeBaseProvider>
+                <NativeBaseProvider config={config}>
                     <Navigation />
                 </NativeBaseProvider>
             </Provider>

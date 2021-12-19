@@ -47,7 +47,7 @@ const CharacterList = ({ characters, onPress }) => (
                                 {item.health}
                             </Text>
                         </VStack>
-                        <Spacer/>
+                        <Spacer />
                         <Text
                             fontSize='xs'
                             _dark={{
@@ -66,7 +66,7 @@ const CharacterList = ({ characters, onPress }) => (
 );
 
 const HomeScreen = ({ navigation }) => {
-    const [characters, setCharacters] = useState([]);
+    const [ characters, setCharacters ] = useState([]);
     const dispatch = useDispatch();
 
     useFocusEffect(

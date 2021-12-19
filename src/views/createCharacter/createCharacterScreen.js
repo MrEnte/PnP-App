@@ -7,9 +7,14 @@ import AppInputField from '../../components/AppInputField';
 const CreateCharacterScreen = ({ navigation }) => {
     const [characterName, setCharacterName] = useState('');
     const [characterHealth, setCharacterHealth] = useState('');
+    const [characterMoney, setCharacterMoney] = useState('');
 
     const handlePress = () => {
-        createCharacter({ characterName, characterHealth });
+        createCharacter({
+            characterName,
+            characterHealth: parseInt(characterHealth),
+            characterMoney: parseInt(characterMoney),
+        });
         navigation.goBack();
     };
 
@@ -28,8 +33,14 @@ const CreateCharacterScreen = ({ navigation }) => {
                 />
                 <AppInputField
                     value={characterHealth}
-                    onChangeText={(value) => setCharacterHealth(parseInt(value))}
+                    onChangeText={(value) => setCharacterHealth(value)}
                     placeholder='Health'
+                    keyboardType='number-pad'
+                />
+                <AppInputField
+                    value={characterMoney}
+                    onChangeText={(value) => setCharacterMoney(value)}
+                    placeholder='Money'
                     keyboardType='number-pad'
                 />
             </Center>
