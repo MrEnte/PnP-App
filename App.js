@@ -7,6 +7,7 @@ import configureStore from './store/configureStore';
 import { Provider, useSelector } from 'react-redux';
 import CreateCharacterScreen from './src/views/createCharacter/createCharacterScreen';
 import CharacterDetailsScreen from './src/views/characterDetails/characterDetailsScreen';
+import CreateWeaponScreen from './src/views/createWeapon/createWeaponScreen';
 
 const Stack = createNativeStackNavigator();
 const store = configureStore()
@@ -24,6 +25,7 @@ const Navigation = () => {
             <Stack.Screen name='Home' component={HomeScreen}/>
             <Stack.Screen name='Create Character' component={CreateCharacterScreen}/>
             <Stack.Screen name='Character Details' component={CharacterDetailsScreen} options={{ title: `Selected: ${selectedCharacter?.name}` }}/>
+            <Stack.Screen name='Create Weapon' component={CreateWeaponScreen} />
         </Stack.Navigator>
     )
 }

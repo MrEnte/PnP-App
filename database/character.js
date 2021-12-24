@@ -23,10 +23,10 @@ const WeaponSchema = {
         damage: 'string',
     },
     primaryKey: '_id',
-}
+};
 
 let characterRealm = new Realm({
-    schema: [ CharacterSchema, WeaponSchema ],
+    schema: [CharacterSchema, WeaponSchema],
     path: 'CharacterDatabase.realm',
     schemaVersion: 6,
 });
@@ -34,10 +34,10 @@ let characterRealm = new Realm({
 export const getAllCharacters = () => characterRealm.objects(CHARACTER_SCHEMA);
 
 export const createCharacter = ({
-    characterName,
-    characterHealth,
-    characterMoney,
-}) => characterRealm.write(() => {
+                                    characterName,
+                                    characterHealth,
+                                    characterMoney,
+                                }) => characterRealm.write(() => {
     const id = characterRealm.objects(CHARACTER_SCHEMA).max('_id') + 1 || 1;
     characterRealm.create(CHARACTER_SCHEMA, {
         name: characterName,
@@ -45,6 +45,21 @@ export const createCharacter = ({
         money: characterMoney,
         _id: id,
     });
+});
+
+export const createWeapon = ({
+                                 weaponName,
+                                 weaponDamage,
+                                 selectedCharacterId
+                             }) => characterRealm.write(() => {
+    const id = characterRealm.objects(WEAPON_SCHEMA).max('_id') + 1 || 1;
+    const newWeapon = characterRealm.create(WEAPON_SCHEMA, {
+        name: weaponName,
+        damage: weaponDamage,
+        _id: id,
+    });
+    const selectedCharacter = characterRealm.objectForPrimaryKey(CHARACTER_SCHEMA, selectedCharacterId);
+    selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
 });
 
 export const deleteAllCharacter = (setCharacters) => characterRealm.write(() => {
